@@ -6,7 +6,7 @@ import db_adapter
 from action import act, TestRequest
 
 def main(request):
-    return get_random_anek_page()
+    return get_random_anek_page(request.remote_addr)
 
 def dislike(request):
     return act(request, db_adapter.dislike)
@@ -14,9 +14,9 @@ def dislike(request):
 def like(request):
     return act(request, db_adapter.like)
 
-def get_random_anek_page():
+def get_random_anek_page(ip):
     anek, id = db_adapter.select_random_anek()
-    return Template(read_file("assets/index.html")).render(anek = anek[db_adapter.TEXT_FIELD_NAME].replace("\n", "<br/>"),
+    return Template(read_file("assets/index.html")).render(anek = anek[db_adapter.TEXT_FIELD_NAME].replace("\n", "<br/>"), ip = ip,
         id = id, likes = len(anek[db_adapter.LIKES_FIELD_NAME]), dislikes = len(anek[db_adapter.DISLIKES_FIELD_NAME]))
 
 def fill_db():
@@ -27,4 +27,4 @@ def read_file(filename):
     with open(filename, "r") as file:
         return file.read()
 
-#print(main(1))
+#print(main(TestRequest('129', {'ip': '12', 'id': '135'})))
