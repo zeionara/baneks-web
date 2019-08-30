@@ -69,7 +69,7 @@ footer {
 <script>
       function updateLikes(){
         const Http = new XMLHttpRequest();
-        const url="https://us-central1-zyra-1537465980753.cloudfunctions.net/like_banek?id=60wcUp6iIQ0mudVZw8t1";
+        const url="https://us-central1-zyra-1537465980753.cloudfunctions.net/like_banek?id=${id}";
         Http.open("GET", url);
         Http.setRequestHeader('Access-Control-Allow-Origin', '*');
         Http.send();
